@@ -26,6 +26,9 @@ const connect = async () => {
     }
 }
 connect()
+app.use('/', (req, res) => {
+    res.json({"message":"Yolo here I come"})
+})
 app.post('/Login', userController.loginHandler)
 app.post('/Signup', userController.signupHandler)
 app.patch('/update-selection', userAuth, quizController.updateHandler)
