@@ -26,7 +26,7 @@ const connect = async () => {
     }
 }
 connect()
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
     res.json({"message":"Yolo here I come"})
 })
 app.post('/Login', userController.loginHandler)
