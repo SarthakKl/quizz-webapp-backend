@@ -1,23 +1,23 @@
-const mongoose = require('mongoose')
-const env = require('dotenv')
-const express = require('express')
-const cors = require('cors')
+import { connect as _connect } from 'mongoose'
+import { config } from 'dotenv'
+import express, { json } from 'express'
+import cors from 'cors'
 const app = express()
-const userAuth = require('./src/middlewares/userAuth')
-const userController = require('./src/controllers/userController')
-const quizController = require('./src/controllers/quizController')
+import userAuth from './src/middlewares/userAuth'
+import { loginHandler, signupHandler, incompleteQuiz, deleteIncompleteQuiz } from './src/controllers/userController'
+import { updateHandler, fetchQuestionHandler } from './src/controllers/quizController'
 // const { default: Question } = require('../client/src/components/Question')
 
 app.use(cors())
-env.config()
-app.use(express.json())
+config()
+app.use(json())
 
 
 const port = process.env.PORT || 3002
 
 const connect = async () => {
     try {
-        await mongoose.connect(process.env.MONGODB_URI, {
+        await _connect(process.env.MONGODB_URI, {
             
         })
         console.log('Connected with database')
@@ -29,12 +29,12 @@ connect()
 app.get('/', (req, res) => {
     res.json({"message":"Yolo here I come"})
 })
-app.post('/Login', userController.loginHandler)
-app.post('/Signup', userController.signupHandler)
-app.patch('/update-selection', userAuth, quizController.updateHandler)
-app.get('/fetchQuestion', userAuth, quizController.fetchQuestionHandler)
-app.get('/incomplete-quiz-lookup', userAuth, userController.incompleteQuiz)
-app.patch('/delete-incomplete-quiz', userAuth, userController.deleteIncompleteQuiz)
+app.post('/Login', loginHandler)
+app.post('/Signup', signupHandler)
+app.patch('/update-selection', userAuth, updateHandler)
+app.get('/fetchQuestion', userAuth, fetchQuestionHandler)
+app.get('/incomplete-quiz-lookup', userAuth, incompleteQuiz)
+app.patch('/delete-incomplete-quiz', userAuth, deleteIncompleteQuiz)
 
 app.listen(port, () => {
     console.log(`Server started at ${port}`)
