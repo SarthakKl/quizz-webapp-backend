@@ -25,9 +25,9 @@ const connect = async () => {
     }
 }
 connect()
-// app.get('/', (req, res) => {
-//     res.json({"message":"Yolo here I come"})
-// })
+app.get('/', (req, res) => {
+    res.json({"message":"Yolo here I come"})
+})
 app.get('/verify', userController.emailVerificationHandler)
 app.post('/Login', userController.loginHandler)
 app.post('/Signup', userController.signupHandler)
