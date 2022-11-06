@@ -14,7 +14,8 @@ const schema = new mongoose.Schema({
         required:true,
         trim:true
     },
-    quiz:String
+    quiz:String,
+    verified:{type:Boolean, default:false}
 })
 schema.statics.findUser = async function(email, pass){
     const user = await User.findOne({email:email})
@@ -32,7 +33,7 @@ schema.statics.findUser = async function(email, pass){
     }
 }
 schema.methods.getAuthToken = async function(){
-    return token = await jwt.sign({_id:this._id}, process.env.JWT_SECRET)
+    return token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET)
 }
 const User = mongoose.model('User', schema)
 

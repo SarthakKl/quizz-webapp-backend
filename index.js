@@ -12,7 +12,6 @@ app.use(cors())
 env.config()
 app.use(express.json())
 
-
 const port = process.env.PORT || 3002
 
 const connect = async () => {
@@ -26,11 +25,13 @@ const connect = async () => {
     }
 }
 connect()
-app.get('/', (req, res) => {
-    res.json({"message":"Yolo here I come"})
-})
+// app.get('/', (req, res) => {
+//     res.json({"message":"Yolo here I come"})
+// })
+app.get('/verify', userController.emailVerificationHandler)
 app.post('/Login', userController.loginHandler)
 app.post('/Signup', userController.signupHandler)
+app.get('/reverify', userController.reverifyEmail)
 app.patch('/update-selection', userAuth, quizController.updateHandler)
 app.get('/fetchQuestion', userAuth, quizController.fetchQuestionHandler)
 app.get('/incomplete-quiz-lookup', userAuth, userController.incompleteQuiz)
