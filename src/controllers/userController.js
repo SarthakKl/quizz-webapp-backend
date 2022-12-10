@@ -10,7 +10,7 @@ const helper = async (userId, email) => {
         
         const url = `${process.env.BASE_URL}${userId}/Login/verify/${token}`
         const mailResponse = await sendEmail(email, 'Email Verification', url);
-
+        
         return {mailResponse:mailResponse, error:mailResponse?.error||null}
     } catch (error) {
         console.log(error)
